@@ -1,0 +1,55 @@
+The Banker's algorithm, sometimes referred to as the avoidance algorithm, is a resource allocation and deadlock avoidance algorithm developed by Edsger Dijkstra that tests for safety by simulating the allocation of predetermined maximum possible amounts of all resources, and then makes an "s-state" check to test for possible deadlock conditions for all other pending activities, before deciding whether allocation should be allowed to continue. 	
+	
+	I developed the solution for the above  problem by creating 2 components ( .java files)
+		1. BankersAlgoImplementation.java
+		2. MaidDemo.java
+
+	The BankersAlgoImplementation class contains the implementation of Bankers Algorithm, It contains 2 methods:
+		boolean getSystemState() and
+		void showExecutinOrder()
+	The method getSystemState takes the following parameters:
+		holdingResources
+		requestedResources
+		availableResources
+		processes
+		resources
+	
+	The objective of this algorithm is to check whether the process with the available resources run in safe state or became subject to deadlock, i.e., unsafe state. To achieve this we are provided with number of processes say 5 and the number of resources say 3 and the allocatedResources matrix contains the resources already available or reserved to process the request. And the maximumResources matrix contains the maximum resources required to process the generated request. And the availableResources contains the avaible resources, those can be utiilised by the particular processor if needed. After the processor completed its job the allocatedResources for that particular processes get free and added to the available Resources.
+	
+	Similarly this process continues for all the remaining processes. If particular process need more than the available resources then it simple skips and give the way to the another process in the sequence to complete its job. After gaining the free resources from the previous completed job then it comes back to the another process.  if it is possible for all processes to finish executing or completes it job with out being deadlock then it is considered as safe state. If any of the processes fails to execute its job since available resources are not adequate then it is considered as unsafe state.
+	
+	The BankerDemo class reads the data from the file input.txt, which contains the details liken Number of processes, Number of Resources, the Allocated Resources matrix, the Maximum Resources matrix, Total Resources and the Available Resources and stores the information in the respective variables. And then it calls the Banker Algoritm method on the details to know the status of the module whethere it is in safe state or unsafe state.
+
+Result of the Program:
+	When I run the Program ( BankerDemo class ) it reads the file input.txt for that I used FileReader class and filtered that in BufferedReader to improve the performance. After obtainined the following details from the file
+Let p be the Number of Processes : 5 and
+Let r be the Number of Resource Types: 3		
+
+and Let allocatedMatrix[][] be the 
+Allocation Matrix
+p1 : 0 1 0
+p2:  2 0 0
+p3: 3 0 2
+p4: 2 1 1
+p5: 0 0 2		
+
+and Let maxMatrix[][] be the
+Max
+7 5 3
+3 2 2 
+9 0 2
+2 2 2 
+4 3 3 				
+
+and let availabe[] be the 
+Available
+3 3 2
+
+	After successfully storing the details in the respective variables it calls the static method "getStatus" of class Banker whicn contains the Banker Algorithm implementation by passing the above details as arguments. It applies the banker algorithm on the details and determines whether the process is in Safe state or in Unsafe State. And finally it prints the Order of the execution of processes
+
+Bugs of the Problem:
+	As we all know that, No application is free of bugs. Since the problem deals with the concurrency concept by sharing the same resources by different processes, the predictable bug can occur is deadlock, if processes are not properly managed. 	
+	Another probable bug can be NumberFormatException. Here I am reading the values from the file assuming the input.txt file contains the information always in the same format mentioned in the problem statement. If it is not then it throws NumberFormatException.
+
+Limitation of the Problem:
+	Like the other algorithms, the Banker's algorithm has some limitations when implemented. Specifically, it needs to know how much of each resource a process could possibly request. In most systems, this information is unavailable, making it impossible to implement the Banker's algorithm. Also, it is unrealistic to assume that the number of processes is static since in most systems the number of processes varies dynamically. Moreover, the requirement that a process will eventually release all its resources (when the process terminates) is sufficient for the correctness of the algorithm, however it is not sufficient for a practical system. Waiting for hours (or even days) for resources to be released is usually not acceptable.
